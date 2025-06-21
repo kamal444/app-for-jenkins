@@ -1,12 +1,38 @@
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя страница</title>
-</head>
-<body>
-    <h2>Good Buy from Jamal-IT-IT-IT</h2>
-	<h1>Добро пожаловать на мою страницу!</h1>
-    <p>Это пример HTML-документа.</p>
-</body>
-</html>
+pipeline {
+    agent {
+        docker {
+            image 'python:latest'
+            args '-v /tmp:/tmp'
+        }
+    }
+
+    stages {
+        stage('1-Build') {
+            steps {
+                echo 'Start Build'
+                echo 'Building'
+                echo 'End Build'
+            }
+        }
+        stage('2-Test') {
+            steps{
+                echo 'Start Test'
+                echo 'Testing'
+                sh 'ls -la'
+                echo 'End Test'
+            }
+        }
+        stage('3-Deploy'){
+            steps{
+                echo 'Start Deploy'
+                echo 'Deploying'
+                sh '''
+                    echo 'Line-1'
+                    echo 'Line-2'
+                '''
+                sh 'python --version'
+                echo 'End Deploy'
+            }
+        }
+    }
+}
